@@ -4,8 +4,8 @@ import kr.higu.peelie.common.response.ErrorCode;
 import lombok.Getter;
 
 /**
- * BaseException 또는 BaseException 을 확장한 Exception 은
- * 서비스 운영에서 예상이 가능한 Exception.
+ * BaseException 또는 BaseException 을 확장한 exception 은
+ * 서비스 운영에서 예상이 가능한 exception.
  *
  * http status: 200 이면서 result: FAIL 을 표현
  */

@@ -62,7 +62,7 @@ public class CommonControllerAdvice {
     }
 
     /**
-     * 예상치 않은 Exception 중에서 모니터링 skip 이 가능한 Exception 을 처리할 때
+     * 예상치 않은 exception 중에서 모니터링 skip 이 가능한 exception 을 처리할 때
      * ex) ClientAbortException
      *
      * @param e
