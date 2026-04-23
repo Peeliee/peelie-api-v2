@@ -27,7 +27,7 @@ public class Question extends BaseTimeEntity {
     @Column(nullable = false)
     private String purpose;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private int displayOrder;
 
     @Enumerated(EnumType.STRING)
