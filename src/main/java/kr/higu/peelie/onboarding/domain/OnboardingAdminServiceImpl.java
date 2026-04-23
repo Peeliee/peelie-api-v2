@@ -12,29 +12,21 @@ public class OnboardingAdminServiceImpl implements OnboardingAdminService {
 
     private final QuestionReader questionReader;
     private final QuestionStore questionStore;
-    private final AnswerOptionStore answerOptionStore;
 
     @Override
     @Transactional
     public Question registerQuestion(QuestionCommand.RegisterQuestionRequest command) {
-
-        // 온보징 질문 생성 및 저장
-        Question initQuestion = command.toEntity();
-        Question question = questionStore.store(initQuestion);
-
-        // 주관신 문항이면 바로 리턴
-        if (question.getQuestionType() == Question.QuestionType.SUBJECTIVE) {
-            return question;
+        Question question = command.toEntity();
+        if (question.getQuestionType() == Question.QuestionType.CHOICE) {
+            command.getAnswerOptionsRequestList().forEach(request ->
+                    question.addAnswerOption(
+                            request.getContent(),
+                            request.getDisplayOrder(),
+                            request.getOptionTag()
+                    )
+            );
         }
-
-        // 선택지 저장
-        List<AnswerOption> initAnswerOptions = command.getAnswerOptionsRequestList().stream()
-                .map(req -> req.toEntity(question))
-                .toList();
-
-        answerOptionStore.storeAll(initAnswerOptions);
-
-        return question;
+        return questionStore.store(question);
     }
 
     @Override

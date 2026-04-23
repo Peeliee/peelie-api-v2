@@ -3,7 +3,6 @@ package kr.higu.peelie.onboarding.domain;
 import jakarta.persistence.*;
 import kr.higu.peelie.common.exception.InvalidParamException;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -30,12 +29,10 @@ public class AnswerOption {
     @Column(name = "option_tag", nullable = false)
     private String optionTag;
 
-    @Builder
-    public AnswerOption(Question question, String content, int displayOrder, String optionTag) {
-        this.question = question;
-        this.content = content;
-        this.displayOrder = displayOrder;
-        this.optionTag = optionTag;
+    public AnswerOption(String content, int displayOrder, String optionTag) {
+        changeContent(content);
+        changeDisplayOrder(displayOrder);
+        changeOptionTag(optionTag);
     }
 
     public void changeContent(String content) {
@@ -52,5 +49,10 @@ public class AnswerOption {
         if (newDisplayOrder == null) throw new InvalidParamException("선택지의 순서가 정해지지 않았습니다");
         if (newDisplayOrder <= 0) throw new InvalidParamException("선택지의 순서는 1이상의 정수로 입력해주세요.");
         this.displayOrder = newDisplayOrder;
+    }
+
+    //어그리거트 루트 통해서만 사용되도록 default접근 제어
+    void setQuestion(Question question) {
+        this.question = question;
     }
 }

@@ -19,18 +19,8 @@ class QuestionTest {
                 .displayOrder(1)
                 .questionType(Question.QuestionType.CHOICE)
                 .build();
-        question.getAnswerOptions().add(AnswerOption.builder()
-                .question(question)
-                .content("선택지 1")
-                .displayOrder(1)
-                .optionTag("tag1")
-                .build());
-        question.getAnswerOptions().add(AnswerOption.builder()
-                .question(question)
-                .content("선택지 2")
-                .displayOrder(2)
-                .optionTag("tag2")
-                .build());
+        question.addAnswerOption("선택지 1", 1, "tag1");
+        question.addAnswerOption("선택지 2", 2, "tag2");
 
         // when
         question.update("수정 질문", "수정 목적", 3, Question.QuestionType.SUBJECTIVE);
@@ -72,20 +62,51 @@ class QuestionTest {
                 .displayOrder(1)
                 .questionType(Question.QuestionType.CHOICE)
                 .build();
-        AnswerOption answerOption = AnswerOption.builder()
-                .question(question)
-                .content("선택지 1")
-                .displayOrder(1)
-                .optionTag("tag1")
-                .build();
-        question.getAnswerOptions().add(answerOption);
+        question.addAnswerOption("선택지 1", 1, "tag1");
 
         // when
         question.update("수정 질문", "수정 목적", 2, Question.QuestionType.CHOICE);
 
         // then
         assertThat(question.getQuestionType()).isEqualTo(Question.QuestionType.CHOICE);
-        assertThat(question.getAnswerOptions()).containsExactly(answerOption);
+        assertThat(question.getAnswerOptions()).hasSize(1);
+        assertThat(question.getAnswerOptions().get(0).getContent()).isEqualTo("선택지 1");
+    }
+
+    @Test
+    @DisplayName("성공: 선택지를 추가하면 질문과 연관관계가 함께 설정된다")
+    void addAnswerOptionAssignsQuestion() {
+        // given
+        Question question = Question.builder()
+                .content("질문")
+                .purpose("목적")
+                .displayOrder(1)
+                .questionType(Question.QuestionType.CHOICE)
+                .build();
+
+        // when
+        question.addAnswerOption("선택지 1", 1, "tag1");
+
+        // then
+        assertThat(question.getAnswerOptions()).hasSize(1);
+        assertThat(question.getAnswerOptions().get(0).getQuestion()).isEqualTo(question);
+    }
+
+    @Test
+    @DisplayName("실패: 주관식 질문에는 선택지를 추가할 수 없다")
+    void addAnswerOptionFailsWhenSubjectiveQuestion() {
+        // given
+        Question question = Question.builder()
+                .content("질문")
+                .purpose("목적")
+                .displayOrder(1)
+                .questionType(Question.QuestionType.SUBJECTIVE)
+                .build();
+
+        // when // then
+        assertThatThrownBy(() -> question.addAnswerOption("선택지 1", 1, "tag1"))
+                .isInstanceOf(InvalidParamException.class)
+                .hasMessage("주관식 질문에는 선택지를 추가할 수 없습니다.");
     }
 
     @Test

@@ -77,6 +77,16 @@ public class Question extends BaseTimeEntity {
         changeQuestionType(questionType);
     }
 
+    public void addAnswerOption(String content, Integer displayOrder, String optionTag) {
+        if (questionType == QuestionType.SUBJECTIVE) {
+            throw new InvalidParamException("주관식 질문에는 선택지를 추가할 수 없습니다.");
+        }
+
+        AnswerOption answerOption = new AnswerOption(content, displayOrder, optionTag);
+        answerOption.setQuestion(this);
+        answerOptions.add(answerOption);
+    }
+
     public enum QuestionType {
         CHOICE,
         SUBJECTIVE;

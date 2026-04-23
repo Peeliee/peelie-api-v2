@@ -22,4 +22,9 @@ public class QuestionInfo {
         this.questionType = question.getQuestionType();
         this.answerOptions = question.getAnswerOptions();
     }
+
+    @Getter
+    public static class AnswerOptionInfo {
+
+    }
 }

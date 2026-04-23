@@ -28,28 +28,19 @@ public class QuestionCommand {
 
     @Getter
     @Builder
+    public static class RegisterAnswerOptionRequest {
+        private final String content;
+        private final int displayOrder;
+        private final String optionTag;
+    }
+
+    @Getter
+    @Builder
     public static class UpdateQuestionRequest {
         private final Long questionId;
         private final String content;
         private final String purpose;
         private final Integer displayOrder;
         private final Question.QuestionType questionType;
-    }
-
-    @Getter
-    @Builder
-    public static class RegisterAnswerOptionRequest {
-        private final String content;
-        private final int displayOrder;
-        private final String optionTag;
-
-        public AnswerOption toEntity(Question question) {
-            return AnswerOption.builder().
-                    question(question)
-                    .content(content)
-                    .displayOrder(displayOrder)
-                    .optionTag(optionTag)
-                    .build();
-        }
     }
 }

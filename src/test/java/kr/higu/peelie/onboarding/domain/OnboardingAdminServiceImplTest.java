@@ -4,6 +4,7 @@ import kr.higu.peelie.common.exception.EntityNotFoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -22,11 +23,73 @@ class OnboardingAdminServiceImplTest {
     @Mock
     private QuestionStore questionStore;
 
-    @Mock
-    private AnswerOptionStore answerOptionStore;
-
     @InjectMocks
     private OnboardingAdminServiceImpl onboardingAdminService;
+
+    @Test
+    @DisplayName("성공: 객관식 질문을 생성하면 선택지도 함께 저장한다")
+    void registerChoiceQuestionWithAnswerOptions() {
+        // given
+        QuestionCommand.RegisterQuestionRequest command = QuestionCommand.RegisterQuestionRequest.builder()
+                .content("질문")
+                .purpose("목적")
+                .displayOrder(1)
+                .questionType(Question.QuestionType.CHOICE)
+                .answerOptionsRequestList(java.util.List.of(
+                        QuestionCommand.RegisterAnswerOptionRequest.builder()
+                                .content("선택지 1")
+                                .displayOrder(1)
+                                .optionTag("tag1")
+                                .build(),
+                        QuestionCommand.RegisterAnswerOptionRequest.builder()
+                                .content("선택지 2")
+                                .displayOrder(2)
+                                .optionTag("tag2")
+                                .build()
+                ))
+                .build();
+        ArgumentCaptor<Question> questionCaptor = ArgumentCaptor.forClass(Question.class);
+        given(questionStore.store(questionCaptor.capture())).willAnswer(invocation -> invocation.getArgument(0));
+
+        // when
+        onboardingAdminService.registerQuestion(command);
+
+        // then
+        Question savedQuestion = questionCaptor.getValue();
+        assertThat(savedQuestion.getQuestionType()).isEqualTo(Question.QuestionType.CHOICE);
+        assertThat(savedQuestion.getAnswerOptions()).hasSize(2);
+        assertThat(savedQuestion.getAnswerOptions().get(0).getQuestion()).isEqualTo(savedQuestion);
+        assertThat(savedQuestion.getAnswerOptions().get(1).getQuestion()).isEqualTo(savedQuestion);
+    }
+
+    @Test
+    @DisplayName("성공: 주관식 질문을 생성하면 선택지는 저장하지 않는다")
+    void registerSubjectiveQuestionWithoutAnswerOptions() {
+        // given
+        QuestionCommand.RegisterQuestionRequest command = QuestionCommand.RegisterQuestionRequest.builder()
+                .content("질문")
+                .purpose("목적")
+                .displayOrder(1)
+                .questionType(Question.QuestionType.SUBJECTIVE)
+                .answerOptionsRequestList(java.util.List.of(
+                        QuestionCommand.RegisterAnswerOptionRequest.builder()
+                                .content("선택지 1")
+                                .displayOrder(1)
+                                .optionTag("tag1")
+                                .build()
+                ))
+                .build();
+        ArgumentCaptor<Question> questionCaptor = ArgumentCaptor.forClass(Question.class);
+        given(questionStore.store(questionCaptor.capture())).willAnswer(invocation -> invocation.getArgument(0));
+
+        // when
+        onboardingAdminService.registerQuestion(command);
+
+        // then
+        Question savedQuestion = questionCaptor.getValue();
+        assertThat(savedQuestion.getQuestionType()).isEqualTo(Question.QuestionType.SUBJECTIVE);
+        assertThat(savedQuestion.getAnswerOptions()).isEmpty();
+    }
 
     @Test
     @DisplayName("성공: 질문을 수정한다")
@@ -38,12 +101,7 @@ class OnboardingAdminServiceImplTest {
                 .displayOrder(1)
                 .questionType(Question.QuestionType.CHOICE)
                 .build();
-        question.getAnswerOptions().add(AnswerOption.builder()
-                .question(question)
-                .content("선택지")
-                .displayOrder(1)
-                .optionTag("tag")
-                .build());
+        question.addAnswerOption("선택지", 1, "tag");
         QuestionCommand.UpdateQuestionRequest command = QuestionCommand.UpdateQuestionRequest.builder()
                 .questionId(1L)
                 .content("수정 질문")
