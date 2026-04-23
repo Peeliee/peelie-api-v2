@@ -21,6 +21,12 @@ public class QuestionReaderImpl implements QuestionReader {
     }
 
     @Override
+    public Question getQuestionByDisplayOrder(Integer displayId) {
+        return questionRepository.findByDisplayOrder(displayId)
+                .orElseThrow(() -> new EntityNotFoundException("해당 순서의 질문이 존재하지 않습니다."));
+    }
+
+    @Override
     public List<Question> getQuestions() {
         return questionRepository.findAllByOrderByDisplayOrderAsc();
     }
