@@ -28,7 +28,7 @@ public class Question extends BaseTimeEntity {
     private String purpose;
 
     @Column(nullable = false, unique = true)
-    private int displayOrder;
+    private Integer displayOrder;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -39,7 +39,7 @@ public class Question extends BaseTimeEntity {
     private List<AnswerOption> answerOptions = new ArrayList<>();
 
     @Builder
-    public Question(String content, String purpose, int displayOrder, QuestionType questionType) {
+    public Question(String content, String purpose, Integer displayOrder, QuestionType questionType) {
         this.content = content;
         this.purpose = purpose;
         this.displayOrder = displayOrder;

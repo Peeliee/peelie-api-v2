@@ -30,7 +30,7 @@ public class QuestionCommand {
     @Builder
     public static class RegisterAnswerOptionRequest {
         private final String content;
-        private final int displayOrder;
+        private final Integer displayOrder;
         private final String optionTag;
     }
 

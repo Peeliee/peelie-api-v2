@@ -23,13 +23,13 @@ public class AnswerOption {
     private String content;
 
     @Column(nullable = false)
-    private int displayOrder;
+    private Integer displayOrder;
 
     // 해당 선택지를 통해 파악하는 사용자의 성향 정보 e.g) 사실, 상황에 먼저 반응하는 대화스타일, 주도형 ...
     @Column(name = "option_tag", nullable = false)
     private String optionTag;
 
-    public AnswerOption(String content, int displayOrder, String optionTag) {
+    public AnswerOption(String content, Integer displayOrder, String optionTag) {
         changeContent(content);
         changeDisplayOrder(displayOrder);
         changeOptionTag(optionTag);
