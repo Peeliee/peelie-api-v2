@@ -38,6 +38,19 @@ public class OnboardingAdminServiceImpl implements OnboardingAdminService {
     }
 
     @Override
+    @Transactional
+    public void updateQuestion(QuestionCommand.UpdateQuestionRequest command) {
+        Question question = questionReader.getQuestion(command.getQuestionId());
+        question.update(
+                command.getContent(),
+                command.getPurpose(),
+                command.getDisplayOrder(),
+                command.getQuestionType()
+        );
+        questionStore.store(question);
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public List<Question> getQuestions() {
         return questionReader.getQuestions();
@@ -48,19 +61,5 @@ public class OnboardingAdminServiceImpl implements OnboardingAdminService {
     public void deleteQuestion(Long questionId) {
         Question question = questionReader.getQuestion(questionId);
         questionStore.delete(question);
-    }
-
-    @Override
-    @Transactional
-    public void changeChoice(Long questionId) {
-        Question question = questionReader.getQuestion(questionId);
-        question.changeChoice();
-    }
-
-    @Override
-    @Transactional
-    public void changeSubjective(Long questionId) {
-        Question question = questionReader.getQuestion(questionId);
-        question.changeSubjective();
     }
 }

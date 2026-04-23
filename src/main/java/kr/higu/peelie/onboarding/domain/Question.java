@@ -62,12 +62,19 @@ public class Question extends BaseTimeEntity {
         this.displayOrder = newDisplayOrder;
     }
 
-    public void changeChoice() {
-        this.questionType = QuestionType.CHOICE;
+    public void changeQuestionType(QuestionType newQuestionType) {
+        if (newQuestionType == null) throw new InvalidParamException("질문 타입을 선택해주세요.");
+        this.questionType = newQuestionType;
+        if (newQuestionType == QuestionType.SUBJECTIVE) {
+            answerOptions.clear();
+        }
     }
 
-    public void changeSubjective() {
-        this.questionType = QuestionType.SUBJECTIVE;
+    public void update(String content, String purpose, Integer displayOrder, QuestionType questionType) {
+        changeContent(content);
+        changePurpose(purpose);
+        changeDisplayOrder(displayOrder);
+        changeQuestionType(questionType);
     }
 
     public enum QuestionType {

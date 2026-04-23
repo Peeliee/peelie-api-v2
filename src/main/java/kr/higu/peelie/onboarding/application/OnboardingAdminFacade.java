@@ -18,19 +18,15 @@ public class OnboardingAdminFacade {
         onboardingAdminService.registerQuestion(command);
     }
 
+    public void updateQuestion(QuestionCommand.UpdateQuestionRequest command) {
+        onboardingAdminService.updateQuestion(command);
+    }
+
     public List<Question> getQuestions() {
         return onboardingAdminService.getQuestions();
     }
 
     public void deleteQuestion(Long questionId) {
         onboardingAdminService.deleteQuestion(questionId);
-    }
-
-    public void changeChoice(Long questionId) {
-        onboardingAdminService.changeChoice(questionId);
-    }
-
-    public void changeSubjective(Long questionId) {
-        onboardingAdminService.changeSubjective(questionId);
     }
 }
