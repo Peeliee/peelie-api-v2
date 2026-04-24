@@ -1,13 +1,11 @@
 package kr.higu.peelie.onboarding.interfaces;
 
+import jakarta.validation.Valid;
 import kr.higu.peelie.common.auth.UserContextHolder;
 import kr.higu.peelie.common.response.CommonResponse;
 import kr.higu.peelie.onboarding.application.OnboardingFacade;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -33,5 +31,14 @@ public class OnboardingController {
         var questionInfo = onboardingFacade.getQuestion(order);
         var result = mapper.toQuestion(questionInfo);
         return CommonResponse.success(result);
+    }
+
+    @PostMapping()
+    public CommonResponse<String> completeOnboarding(
+            @RequestBody @Valid OnboardingRequest.Complete request
+    ) {
+        String userPublicId = UserContextHolder.requireUserContext();
+        onboardingFacade.completeOnboarding(request.toCommand(), userPublicId);
+        return CommonResponse.success("온보딩이 완료되었습니다.");
     }
 }
