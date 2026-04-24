@@ -2,6 +2,7 @@ package kr.higu.peelie.onboarding.domain;
 
 import jakarta.persistence.*;
 import kr.higu.peelie.common.exception.InvalidParamException;
+import kr.higu.peelie.common.jpa.BaseTimeEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "answer_options")
-public class AnswerOption {
+public class AnswerOption extends BaseTimeEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
