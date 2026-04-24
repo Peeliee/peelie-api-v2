@@ -1,6 +1,7 @@
 package kr.higu.peelie.onboarding.domain;
 
 import kr.higu.peelie.common.exception.EntityNotFoundException;
+import kr.higu.peelie.onboarding.domain.question.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,7 +16,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 
 @ExtendWith(MockitoExtension.class)
-class OnboardingAdminServiceImplTest {
+class QuestionServiceImplTest {
 
     @Mock
     private QuestionReader questionReader;
@@ -24,7 +25,7 @@ class OnboardingAdminServiceImplTest {
     private QuestionStore questionStore;
 
     @InjectMocks
-    private OnboardingAdminServiceImpl onboardingAdminService;
+    private QuestionServiceImpl questionService;
 
     @Test
     @DisplayName("성공: 객관식 질문을 생성하면 선택지도 함께 저장한다")
@@ -52,7 +53,7 @@ class OnboardingAdminServiceImplTest {
         given(questionStore.store(questionCaptor.capture())).willAnswer(invocation -> invocation.getArgument(0));
 
         // when
-        onboardingAdminService.registerQuestion(command);
+        questionService.registerQuestion(command);
 
         // then
         Question savedQuestion = questionCaptor.getValue();
@@ -83,7 +84,7 @@ class OnboardingAdminServiceImplTest {
         given(questionStore.store(questionCaptor.capture())).willAnswer(invocation -> invocation.getArgument(0));
 
         // when
-        onboardingAdminService.registerQuestion(command);
+        questionService.registerQuestion(command);
 
         // then
         Question savedQuestion = questionCaptor.getValue();
@@ -112,7 +113,7 @@ class OnboardingAdminServiceImplTest {
         given(questionReader.getQuestion(1L)).willReturn(question);
 
         // when
-        onboardingAdminService.updateQuestion(command);
+        questionService.updateQuestion(command);
 
         // then
         assertThat(question.getContent()).isEqualTo("수정 질문");
@@ -137,7 +138,7 @@ class OnboardingAdminServiceImplTest {
         given(questionReader.getQuestion(1L)).willThrow(new EntityNotFoundException("해당 ID의 질문이 존재하지 않습니다."));
 
         // when // then
-        assertThatThrownBy(() -> onboardingAdminService.updateQuestion(command))
+        assertThatThrownBy(() -> questionService.updateQuestion(command))
                 .isInstanceOf(EntityNotFoundException.class)
                 .hasMessage("해당 ID의 질문이 존재하지 않습니다.");
     }

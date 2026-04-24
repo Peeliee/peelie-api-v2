@@ -1,8 +1,8 @@
 package kr.higu.peelie.onboarding.interfaces.admin;
 
-import kr.higu.peelie.onboarding.domain.AnswerOption;
-import kr.higu.peelie.onboarding.domain.Question;
-import kr.higu.peelie.onboarding.domain.QuestionCommand;
+import kr.higu.peelie.onboarding.domain.question.AnswerOption;
+import kr.higu.peelie.onboarding.domain.question.Question;
+import kr.higu.peelie.onboarding.domain.question.QuestionCommand;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

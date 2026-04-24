@@ -1,6 +1,6 @@
 package kr.higu.peelie.onboarding.infra;
 
-import kr.higu.peelie.onboarding.domain.Question;
+import kr.higu.peelie.onboarding.domain.question.Question;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

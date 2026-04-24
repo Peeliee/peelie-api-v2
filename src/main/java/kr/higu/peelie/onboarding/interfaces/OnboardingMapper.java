@@ -1,6 +1,6 @@
 package kr.higu.peelie.onboarding.interfaces;
 
-import kr.higu.peelie.onboarding.domain.QuestionInfo;
+import kr.higu.peelie.onboarding.domain.question.QuestionInfo;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

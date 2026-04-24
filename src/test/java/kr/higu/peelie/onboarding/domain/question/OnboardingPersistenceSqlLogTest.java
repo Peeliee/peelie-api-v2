@@ -1,6 +1,7 @@
-package kr.higu.peelie.onboarding.domain;
+package kr.higu.peelie.onboarding.domain.question;
 
 import jakarta.persistence.EntityManager;
+import kr.higu.peelie.onboarding.infra.QuestionRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 import org.junit.jupiter.api.extension.ExtendWith;
 import kr.higu.peelie.common.config.JpaAuditingConfig;
-import kr.higu.peelie.onboarding.infra.QuestionRepository;
 
 import java.util.List;
 

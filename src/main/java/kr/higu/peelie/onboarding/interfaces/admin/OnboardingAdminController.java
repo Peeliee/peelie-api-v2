@@ -2,7 +2,7 @@ package kr.higu.peelie.onboarding.interfaces.admin;
 
 import jakarta.validation.Valid;
 import kr.higu.peelie.onboarding.application.OnboardingAdminFacade;
-import kr.higu.peelie.onboarding.domain.Question;
+import kr.higu.peelie.onboarding.domain.question.Question;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

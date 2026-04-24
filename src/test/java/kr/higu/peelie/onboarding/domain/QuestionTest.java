@@ -1,6 +1,7 @@
 package kr.higu.peelie.onboarding.domain;
 
 import kr.higu.peelie.common.exception.InvalidParamException;
+import kr.higu.peelie.onboarding.domain.question.Question;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

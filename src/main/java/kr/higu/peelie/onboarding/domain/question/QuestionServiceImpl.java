@@ -1,4 +1,4 @@
-package kr.higu.peelie.onboarding.domain;
+package kr.higu.peelie.onboarding.domain.question;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -8,7 +8,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class OnboardingAdminServiceImpl implements OnboardingAdminService {
+public class QuestionServiceImpl implements QuestionService {
 
     private final QuestionReader questionReader;
     private final QuestionStore questionStore;

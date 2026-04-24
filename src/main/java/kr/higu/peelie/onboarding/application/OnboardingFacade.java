@@ -1,7 +1,7 @@
 package kr.higu.peelie.onboarding.application;
 
 import kr.higu.peelie.onboarding.domain.OnboardingService;
-import kr.higu.peelie.onboarding.domain.QuestionInfo;
+import kr.higu.peelie.onboarding.domain.question.QuestionInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -1,8 +1,8 @@
 package kr.higu.peelie.onboarding.application;
 
-import kr.higu.peelie.onboarding.domain.OnboardingAdminService;
-import kr.higu.peelie.onboarding.domain.Question;
-import kr.higu.peelie.onboarding.domain.QuestionCommand;
+import kr.higu.peelie.onboarding.domain.question.QuestionService;
+import kr.higu.peelie.onboarding.domain.question.Question;
+import kr.higu.peelie.onboarding.domain.question.QuestionCommand;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,21 +12,21 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OnboardingAdminFacade {
 
-    private final OnboardingAdminService onboardingAdminService;
+    private final QuestionService questionService;
 
     public void registerQuestion(QuestionCommand.RegisterQuestionRequest command) {
-        onboardingAdminService.registerQuestion(command);
+        questionService.registerQuestion(command);
     }
 
     public void updateQuestion(QuestionCommand.UpdateQuestionRequest command) {
-        onboardingAdminService.updateQuestion(command);
+        questionService.updateQuestion(command);
     }
 
     public List<Question> getQuestions() {
-        return onboardingAdminService.getQuestions();
+        return questionService.getQuestions();
     }
 
     public void deleteQuestion(Long questionId) {
-        onboardingAdminService.deleteQuestion(questionId);
+        questionService.deleteQuestion(questionId);
     }
 }

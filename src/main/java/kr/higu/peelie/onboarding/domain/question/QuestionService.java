@@ -1,8 +1,8 @@
-package kr.higu.peelie.onboarding.domain;
+package kr.higu.peelie.onboarding.domain.question;
 
 import java.util.List;
 
-public interface OnboardingAdminService {
+public interface QuestionService {
 
     Question registerQuestion(QuestionCommand.RegisterQuestionRequest command);
     void updateQuestion(QuestionCommand.UpdateQuestionRequest command);

@@ -1,6 +1,6 @@
 package kr.higu.peelie.onboarding.interfaces.admin;
 
-import kr.higu.peelie.onboarding.domain.Question;
+import kr.higu.peelie.onboarding.domain.question.Question;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

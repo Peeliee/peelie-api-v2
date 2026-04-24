@@ -1,4 +1,4 @@
-package kr.higu.peelie.onboarding.domain;
+package kr.higu.peelie.onboarding.domain.question;
 
 public interface QuestionStore {
     Question store(Question question);

@@ -1,4 +1,4 @@
-package kr.higu.peelie.onboarding.domain;
+package kr.higu.peelie.onboarding.domain.question;
 
 import lombok.Builder;
 import lombok.Getter;

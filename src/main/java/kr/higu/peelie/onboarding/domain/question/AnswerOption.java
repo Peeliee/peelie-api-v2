@@ -1,4 +1,4 @@
-package kr.higu.peelie.onboarding.domain;
+package kr.higu.peelie.onboarding.domain.question;
 
 import jakarta.persistence.*;
 import kr.higu.peelie.common.exception.InvalidParamException;
