@@ -34,7 +34,7 @@ public class PublicIdGenerator {
 
     private static void validateLength(int length) {
         if (length < 0) {
-            throw new IllegalArgumentException("token length must be zero or positive");
+            throw new IllegalArgumentException("publicId의 길이는 0이상의 양수여야합니다.");
         }
     }
 }
