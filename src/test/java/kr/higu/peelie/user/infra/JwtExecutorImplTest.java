@@ -12,6 +12,6 @@ public class JwtExecutorImplTest {
         JwtExecutorImpl jwtExecutor = new JwtExecutorImpl("secretKEy", accessTokenExpireSeconds, 3600L);
         Long userId =1L;
 
-        System.out.println(jwtExecutor.issueAccessToken("usr_1DK1ygwnq8Iy2a1k"));
+//        System.out.println(jwtExecutor.issueAccessToken("usr_1DK1ygwnq8Iy2a1k"));
     }
 }

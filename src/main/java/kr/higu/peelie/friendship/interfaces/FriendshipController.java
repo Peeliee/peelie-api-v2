@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/friends")
 @RequiredArgsConstructor
-public class FriendshipController {
+public class FriendshipController implements FriendshipControllerDoc {
 
     private final FriendshipFacade friendshipFacade;
     private final FriendshipMapper friendshipMapper;

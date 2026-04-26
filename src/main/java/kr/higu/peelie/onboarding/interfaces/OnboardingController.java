@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/onboarding")
-public class OnboardingController {
+public class OnboardingController implements OnboardingControllerDoc {
 
     private final OnboardingFacade onboardingFacade;
     private final OnboardingMapper mapper;
