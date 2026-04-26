@@ -46,6 +46,7 @@ public class FriendshipServiceImpl implements FriendshipService{
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<FriendInfo> getFriends(String userPublicId) {
         Long userId = userReader.getUser(userPublicId).getId();
 
