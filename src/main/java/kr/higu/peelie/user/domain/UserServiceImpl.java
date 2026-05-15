@@ -1,8 +1,8 @@
 package kr.higu.peelie.user.domain;
 
-import kr.higu.peelie.common.exception.InvalidParamException;
 import kr.higu.peelie.user.domain.oauth.OAuthClient;
 import kr.higu.peelie.user.domain.oauth.OAuthProfile;
+import kr.higu.peelie.user.domain.oauth.Provider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,20 +18,45 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public LoginResult loginWithCode(User.Provider provider, String authorizationCode) {
-        validateSupportedProvider(provider);
+    public LoginResult loginWithCode(Provider provider, String authorizationCode) {
         String providerAccessToken = oauthClient.getAccessToken(authorizationCode);
         return login(provider, providerAccessToken);
     }
 
     @Override
     @Transactional
-    public LoginResult loginWithAccessToken(User.Provider provider, String providerAccessToken) {
+    public LoginResult loginWithAccessToken(Provider provider, String providerAccessToken) {
         return login(provider, providerAccessToken);
     }
 
-    private LoginResult login(User.Provider provider, String providerAccessToken) {
-        validateSupportedProvider(provider);
+    @Override
+    @Transactional(readOnly = true)
+    public UserInfo getUser(String userPublicId) {
+        User user = userReader.getUser(userPublicId);
+        UserInfo userInfo = new UserInfo(user);
+        return userInfo;
+    }
+
+    @Override
+    @Transactional
+    public UserInfo updateUser(String userPublicId, String name, PersonalityType personalityType) {
+        User user = userReader.getUser(userPublicId);
+        user.changeName(name);
+        user.changePersonalityType(personalityType);
+        UserInfo userInfo = new UserInfo(user);
+        return userInfo;
+    }
+
+    @Override
+    @Transactional
+    public void applyOnboarding(String userPublicId, String name, PersonalityType personalityType) {
+        User user = userReader.getUser(userPublicId);
+        user.changeName(name);
+        user.changePersonalityType(personalityType);
+        user.completeOnboarding();
+    }
+
+    private LoginResult login(Provider provider, String providerAccessToken) {
         OAuthProfile profile = oauthClient.getUserProfile(providerAccessToken);
         User user = getOrCreateUser(provider, profile.getOid(), profile.getEmail());
 
@@ -41,27 +66,7 @@ public class UserServiceImpl implements UserService {
         );
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public UserInfo getUser(String userPublicId) {
-        return new UserInfo(userReader.getUser(userPublicId));
-    }
-
-    @Override
-    @Transactional
-    public void applyOnboarding(String userPublicId, String nickname) {
-        User user = userReader.getUser(userPublicId);
-        user.completeOnboarding(nickname);
-    }
-
-    @Override
-    @Transactional
-    public void changeNickname(String userPublicId, String nickname) {
-        User user = userReader.getUser(userPublicId);
-        user.changeNickname(nickname);
-    }
-
-    private User getOrCreateUser(User.Provider provider, String oid, String email) {
+    private User getOrCreateUser(Provider provider, String oid, String email) {
         User foundUser = userReader.findUser(provider, oid);
 
         if (foundUser != null) {
@@ -69,11 +74,5 @@ public class UserServiceImpl implements UserService {
         }
 
         return userStore.store(new User(provider, oid, email));
-    }
-
-    private void validateSupportedProvider(User.Provider provider) {
-        if (provider != User.Provider.KAKAO) {
-            throw new InvalidParamException("지원하지 않는 OAuth2.0 로그인 방식입니다.: " + provider);
-        }
     }
 }

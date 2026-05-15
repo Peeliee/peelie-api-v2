@@ -39,7 +39,7 @@ public class OnboardingEventHandler {
             payload.put("event_type", EVENT_TYPE);
             payload.put("event_id", event.getEventId());
             payload.put("user_id", event.getUserId().toString());
-            payload.put("nickname", event.getNickname());
+            payload.put("nickname", event.getName());
             payload.put("answers_json", answersJson);
             payload.put("occurred_at", event.getOccurredAt().toString());
 

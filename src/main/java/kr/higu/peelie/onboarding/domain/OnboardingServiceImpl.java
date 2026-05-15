@@ -68,7 +68,7 @@ public class OnboardingServiceImpl implements OnboardingService {
         Onboarding onboarding = onboardingStore.store(initOnboarding);
 
         applicationEventPublisher.publishEvent(
-                OnboardingCompleteEvent.of(onboarding.getEventId(), user.getId(), user.getNickname(), payloads)
+                OnboardingCompleteEvent.of(onboarding.getEventId(), user.getId(), user.getName(), payloads)
         );
     }
 

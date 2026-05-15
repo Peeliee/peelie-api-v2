@@ -42,7 +42,7 @@ public class FriendshipServiceImpl implements FriendshipService{
         Friendship initFriendship = Friendship.create(userId, friendId);
         Friendship friendship = friendshipStore.store(initFriendship);
 
-        return new FriendInfo(friend.getId(), friend.getUserPublicId(), friend.getNickname());
+        return new FriendInfo(friend.getId(), friend.getUserPublicId(), friend.getName());
     }
 
     @Override
@@ -54,7 +54,7 @@ public class FriendshipServiceImpl implements FriendshipService{
                 .map(friendship -> {
                     Long friendId = friendship.getPairUserId(userId);
                     User friendUser = userReader.getUser(friendId);
-                    return new FriendInfo(friendUser.getId(), friendUser.getUserPublicId(), friendUser.getNickname());
+                    return new FriendInfo(friendUser.getId(), friendUser.getUserPublicId(), friendUser.getName());
                 })
                 .toList();
 

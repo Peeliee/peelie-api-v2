@@ -22,8 +22,11 @@ public class UserRequest {
 
     @Getter
     @NoArgsConstructor
-    public static class Nickname {
+    public static class UpdateUser {
         @NotBlank
-        private String newNickname;
+        private String name;
+
+        @NotBlank
+        private String personalityType;
     }
 }

@@ -12,7 +12,7 @@ import java.util.List;
 public class OnboardingCompleteEvent {
     private final String eventId;
     private final Long userId;
-    private final String nickname;
+    private final String name;
     private final List<AnswerPayload> answers;
     private final LocalDateTime occurredAt;
 

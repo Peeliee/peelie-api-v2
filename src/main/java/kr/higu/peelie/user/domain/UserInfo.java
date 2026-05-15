@@ -1,16 +1,17 @@
 package kr.higu.peelie.user.domain;
 
+import kr.higu.peelie.user.domain.oauth.Provider;
 import lombok.Getter;
 
 @Getter
 public class UserInfo {
     private final Long id;
     private final String userPublicId;
-    private final User.Provider provider;
+    private final Provider provider;
     private final String oid;
     private final String email;
-    private final String nickname;
-    private final boolean isOnboarded;
+    private final String name;
+    private final Boolean isOnboarded;
 
     public UserInfo(User user) {
         this.id = user.getId();
@@ -18,7 +19,7 @@ public class UserInfo {
         this.provider = user.getProvider();
         this.oid = user.getOid();
         this.email = user.getEmail();
-        this.nickname = user.getNickname();
-        this.isOnboarded = user.isOnboarded();
+        this.name = user.getName();
+        this.isOnboarded = user.getIsOnboarded();
     }
 }

@@ -40,22 +40,25 @@ public interface UserControllerDoc {
             @RequestBody @Valid UserRequest.NativeLogin request
     );
 
-    @Operation(
-            summary = "내 닉네임 수정",
-            description = "로그인한 사용자의 닉네임을 수정합니다.",
-            requestBody = @RequestBody(
-                    required = true,
-                    description = "닉네임 수정 요청",
-                    content = @Content(schema = @Schema(implementation = UserRequest.Nickname.class))
-            )
-    )
-    @ApiResponses(value = {
+
+    @Operation(summary = "내 프로필 조회", description = "액세스 토큰을 이용해 로그인합니다.")
+    @ApiResponses({
             @ApiResponse(
                     responseCode = "200",
-                    description = "닉네임 수정 성공"
+                    description = "프로필 조회 성공 응답",
+                    content = @Content(schema = @Schema(implementation = UserResponse.User.class))
             )
     })
-    CommonResponse<String> changeNickname(
-            @RequestBody @Valid UserRequest.Nickname request
-    );
+    CommonResponse<UserResponse.User> getMe();
+
+    @Operation(summary = "내 프로필 수정", description = "액세스 토큰을 이용해 로그인합니다.")
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "내 프로필 수정 성공 응답",
+                    content = @Content(schema = @Schema(implementation = UserResponse.User.class))
+            )
+    })
+    CommonResponse<UserResponse.User> updateUser(
+            @RequestBody UserRequest.UpdateUser request);
 }

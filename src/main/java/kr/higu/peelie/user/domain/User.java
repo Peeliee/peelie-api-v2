@@ -4,12 +4,11 @@ import jakarta.persistence.*;
 import kr.higu.peelie.common.exception.InvalidParamException;
 import kr.higu.peelie.common.jpa.BaseTimeEntity;
 import kr.higu.peelie.common.util.PublicIdGenerator;
+import kr.higu.peelie.user.domain.oauth.Provider;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.util.Locale;
 
 @Entity
 @Getter
@@ -25,8 +24,7 @@ public class User extends BaseTimeEntity {
 
     private static final String PREFIX_USER = "usr_";
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(unique = true, nullable = false)
@@ -41,9 +39,12 @@ public class User extends BaseTimeEntity {
 
     private String email;
 
-    private String nickname;
+    private String name;
 
-    private boolean isOnboarded;
+    @Enumerated(EnumType.STRING)
+    private PersonalityType personalityType;
+
+    private Boolean isOnboarded;
 
     @Builder
     public User(Provider provider, String oid, String email) {
@@ -55,32 +56,21 @@ public class User extends BaseTimeEntity {
         this.provider = provider;
         this.oid = oid;
         this.email = email;
+        this.isOnboarded = false;
     }
 
-    public void changeNickname(String nickname) {
-        if (nickname == null || nickname.isBlank()) {
-            throw new InvalidParamException("nickname is empty");
+    public void changeName(String name) {
+        if (name == null || name.isBlank()) {
+            throw new InvalidParamException("name is empty");
         }
-        this.nickname = nickname;
+        this.name = name;
     }
 
-    public void completeOnboarding(String nickname) {
-        changeNickname(nickname);
+    public void changePersonalityType(PersonalityType personalityType) {
+        this.personalityType = personalityType;
+    }
+
+    public void completeOnboarding() {
         this.isOnboarded = true;
-    }
-
-    public enum Provider {
-        KAKAO;
-
-        public static Provider from(String value) {
-            if (value == null || value.isBlank()) {
-                throw new InvalidParamException("provider is required");
-            }
-            try {
-                return Provider.valueOf(value.trim().toUpperCase(Locale.ROOT));
-            } catch (IllegalArgumentException e) {
-                throw new InvalidParamException("unsupported provider: " + value);
-            }
-        }
     }
 }

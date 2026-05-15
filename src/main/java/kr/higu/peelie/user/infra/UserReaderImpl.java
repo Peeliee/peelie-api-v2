@@ -3,6 +3,7 @@ package kr.higu.peelie.user.infra;
 import kr.higu.peelie.common.exception.EntityNotFoundException;
 import kr.higu.peelie.user.domain.User;
 import kr.higu.peelie.user.domain.UserReader;
+import kr.higu.peelie.user.domain.oauth.Provider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -25,7 +26,7 @@ public class UserReaderImpl implements UserReader {
     }
 
     @Override
-    public User findUser(User.Provider provider, String oid) {
+    public User findUser(Provider provider, String oid) {
         return userRepository.findByProviderAndOid(provider, oid).orElse(null);
     }
 }

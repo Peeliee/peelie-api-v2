@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import kr.higu.peelie.common.auth.UserContextHolder;
 import kr.higu.peelie.common.response.CommonResponse;
 import kr.higu.peelie.user.application.UserFacade;
+import kr.higu.peelie.user.domain.UserInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,12 +34,20 @@ public class UserController implements UserControllerDoc{
         return CommonResponse.success(new UserResponse.Login(result));
     }
 
-    @PatchMapping("/me/nickname")
-    public CommonResponse<String> changeNickname(
-            @RequestBody @Valid UserRequest.Nickname request) {
-        String userToken = UserContextHolder.requireUserContext();
-        userFacade.changeNickname(userToken, request.getNewNickname());
-        return CommonResponse.success("닉네임이 변경되었습니다.");
+    @PostMapping("/me")
+    public CommonResponse<UserResponse.User> getMe() {
+        String userPublicId = UserContextHolder.getUserContext();
+        UserInfo userInfo = userFacade.getUser(userPublicId);
+        UserResponse.User response = new UserResponse.User(userInfo);
+        return CommonResponse.success(response);
+    }
+
+    @PatchMapping("/me")
+    public CommonResponse<UserResponse.User> updateUser(@RequestBody UserRequest.UpdateUser request) {
+        String userPublicId = UserContextHolder.getUserContext();
+        UserInfo userInfo = userFacade.updateUser(userPublicId, request.getName(), request.getPersonalityType());
+        UserResponse.User response = new UserResponse.User(userInfo);
+        return CommonResponse.success(response);
     }
 
     @GetMapping("/oauth2/code/kakao")
