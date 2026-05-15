@@ -49,11 +49,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void applyOnboarding(String userPublicId, String name, PersonalityType personalityType) {
+    public UserInfo completeOnboarding(String userPublicId, String name, PersonalityType personalityType) {
         User user = userReader.getUser(userPublicId);
         user.changeName(name);
         user.changePersonalityType(personalityType);
         user.completeOnboarding();
+
+        UserInfo userInfo = new UserInfo(user);
+        return userInfo;
     }
 
     private LoginResult login(Provider provider, String providerAccessToken) {

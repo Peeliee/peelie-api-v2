@@ -27,7 +27,7 @@ public class UserFacade {
         return userService.updateUser(userPublicId, name, PersonalityType.from(personalityType));
     }
 
-    public void applyOnboarding(String userPublicId, String name, String personalityType) {
-        userService.applyOnboarding(userPublicId, name, PersonalityType.from(personalityType));
+    public UserInfo completeOnboarding(String userPublicId, String name, String personalityType) {
+        return userService.completeOnboarding(userPublicId, name, PersonalityType.from(personalityType));
     }
 }

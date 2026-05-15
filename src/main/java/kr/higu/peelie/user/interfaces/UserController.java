@@ -50,6 +50,14 @@ public class UserController implements UserControllerDoc{
         return CommonResponse.success(response);
     }
 
+    @PostMapping("/onboarding")
+    public CommonResponse<UserResponse.User> completeOnboarding(@RequestBody UserRequest.Onboarding request) {
+        String userPublicId = UserContextHolder.getUserContext();
+        UserInfo userInfo = userFacade.completeOnboarding(userPublicId, request.getName(), request.getPersonalityType());
+        UserResponse.User response = new UserResponse.User(userInfo);
+        return CommonResponse.success(response);
+    }
+
     @GetMapping("/oauth2/code/kakao")
     public ResponseEntity<Void> kakaoRedirect() {
         return ResponseEntity.noContent().build();

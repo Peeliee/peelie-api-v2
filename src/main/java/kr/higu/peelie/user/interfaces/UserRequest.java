@@ -25,7 +25,15 @@ public class UserRequest {
     public static class UpdateUser {
         @NotBlank
         private String name;
+        @NotBlank
+        private String personalityType;
+    }
 
+    @Getter
+    @NoArgsConstructor
+    public static class Onboarding {
+        @NotBlank
+        private String name;
         @NotBlank
         private String personalityType;
     }

@@ -9,5 +9,5 @@ public interface UserService {
     UserInfo getUser(String userPublicId);
     UserInfo updateUser(String userPublicId, String name, PersonalityType personalityType);
 
-    void applyOnboarding(String userPublicId, String name, PersonalityType personalityType);
+    UserInfo completeOnboarding(String userPublicId, String name, PersonalityType personalityType);
 }

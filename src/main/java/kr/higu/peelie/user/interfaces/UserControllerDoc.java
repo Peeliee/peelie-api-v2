@@ -41,7 +41,7 @@ public interface UserControllerDoc {
     );
 
 
-    @Operation(summary = "내 프로필 조회", description = "액세스 토큰을 이용해 로그인합니다.")
+    @Operation(summary = "내 프로필 조회", description = "액세스 토큰을 이용해 사용자를 식별합니다.")
     @ApiResponses({
             @ApiResponse(
                     responseCode = "200",
@@ -51,7 +51,7 @@ public interface UserControllerDoc {
     })
     CommonResponse<UserResponse.User> getMe();
 
-    @Operation(summary = "내 프로필 수정", description = "액세스 토큰을 이용해 로그인합니다.")
+    @Operation(summary = "내 프로필 수정", description = "엑세스 토큰을 이용해 사용자를 식별합니다.")
     @ApiResponses({
             @ApiResponse(
                     responseCode = "200",
@@ -61,4 +61,15 @@ public interface UserControllerDoc {
     })
     CommonResponse<UserResponse.User> updateUser(
             @RequestBody UserRequest.UpdateUser request);
+
+    @Operation(summary = "온보딩 완료", description = "액세스 토큰을 이용해 사용자를 식별합니다.")
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "온보딩 완료 응답",
+                    content = @Content(schema = @Schema(implementation = UserResponse.User.class))
+            )
+    })
+    CommonResponse<UserResponse.User> completeOnboarding(
+            @RequestBody UserRequest.Onboarding request);
 }
