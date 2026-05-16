@@ -7,6 +7,7 @@ import lombok.Getter;
 public class UserInfo {
     private final Long id;
     private final String userPublicId;
+    private final String friendCode;
     private final Provider provider;
     private final String oid;
     private final String email;
@@ -17,6 +18,7 @@ public class UserInfo {
     public UserInfo(User user) {
         this.id = user.getId();
         this.userPublicId = user.getUserPublicId();
+        this.friendCode = user.getFriendCode();
         this.provider = user.getProvider();
         this.oid = user.getOid();
         this.email = user.getEmail();

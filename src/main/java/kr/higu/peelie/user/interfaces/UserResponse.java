@@ -21,12 +21,14 @@ public class UserResponse {
     @Getter
     public static class User {
         private final String userPublicId;
+        private final String friendCode;
         private final String name;
         private final PersonalityType personalityType;
         private final Boolean isOnboarded;
 
         public User(UserInfo userInfo) {
             this.userPublicId = userInfo.getUserPublicId();
+            this.friendCode = userInfo.getFriendCode();
             this.name = userInfo.getName();
             this.personalityType = userInfo.getPersonalityType();
             this.isOnboarded = userInfo.getIsOnboarded();

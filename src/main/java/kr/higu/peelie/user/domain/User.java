@@ -23,12 +23,16 @@ import lombok.NoArgsConstructor;
 public class User extends BaseTimeEntity {
 
     private static final String PREFIX_USER = "usr_";
+    private static final int FRIEND_CODE_LENGTH = 8;
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(unique = true, nullable = false)
     private String userPublicId;
+
+    @Column(unique = true, nullable = false, length = FRIEND_CODE_LENGTH)
+    private String friendCode;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -53,6 +57,7 @@ public class User extends BaseTimeEntity {
         if (email == null || email.isBlank()) throw new InvalidParamException("empty email");
 
         this.userPublicId = PublicIdGenerator.randomCharacterWithPrefix(PREFIX_USER);
+        this.friendCode = PublicIdGenerator.randomLowercaseAlphanumeric(FRIEND_CODE_LENGTH);
         this.provider = provider;
         this.oid = oid;
         this.email = email;

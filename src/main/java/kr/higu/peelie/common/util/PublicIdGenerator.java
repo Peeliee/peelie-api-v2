@@ -5,6 +5,7 @@ import java.security.SecureRandom;
 public class PublicIdGenerator {
     private static final int TOKEN_LENGTH = 20;
     private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    private static final String LOWERCASE_ALPHANUMERIC_CHARACTERS = "abcdefghijklmnopqrstuvwxyz0123456789";
     private static final String NUMERIC_CHARACTERS = "0123456789";
     private static final SecureRandom RANDOM = new SecureRandom();
 
@@ -28,6 +29,15 @@ public class PublicIdGenerator {
         StringBuilder sb = new StringBuilder(length);
         for (int i = 0; i < length; i++) {
             sb.append(NUMERIC_CHARACTERS.charAt(RANDOM.nextInt(NUMERIC_CHARACTERS.length())));
+        }
+        return sb.toString();
+    }
+
+    public static String randomLowercaseAlphanumeric(int length) {
+        validateLength(length);
+        StringBuilder sb = new StringBuilder(length);
+        for (int i = 0; i < length; i++) {
+            sb.append(LOWERCASE_ALPHANUMERIC_CHARACTERS.charAt(RANDOM.nextInt(LOWERCASE_ALPHANUMERIC_CHARACTERS.length())));
         }
         return sb.toString();
     }

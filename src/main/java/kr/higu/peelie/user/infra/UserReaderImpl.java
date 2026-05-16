@@ -26,6 +26,13 @@ public class UserReaderImpl implements UserReader {
     }
 
     @Override
+    public User getUserByFriendCode(String friendCode) {
+        String trimmedFriendCode = friendCode == null ? "" : friendCode.trim();
+        return userRepository.findByFriendCode(trimmedFriendCode)
+                .orElseThrow(() -> new EntityNotFoundException("해당 사용자가 존재하지않습니다.. friendCode=" + trimmedFriendCode));
+    }
+
+    @Override
     public User findUser(Provider provider, String oid) {
         return userRepository.findByProviderAndOid(provider, oid).orElse(null);
     }
