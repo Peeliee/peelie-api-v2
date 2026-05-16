@@ -11,6 +11,7 @@ public class UserInfo {
     private final String oid;
     private final String email;
     private final String name;
+    private final PersonalityType personalityType;
     private final Boolean isOnboarded;
 
     public UserInfo(User user) {
@@ -20,6 +21,7 @@ public class UserInfo {
         this.oid = user.getOid();
         this.email = user.getEmail();
         this.name = user.getName();
+        this.personalityType = user.getPersonalityType();
         this.isOnboarded = user.getIsOnboarded();
     }
 }
