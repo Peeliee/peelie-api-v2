@@ -14,7 +14,11 @@ public class FriendshipMapper {
     }
 
     public FriendResponse.AddFriend toAddFriend(FriendInfo friendInfo) {
-        return new FriendResponse.AddFriend(friendInfo.getFriendPublic(), friendInfo.getNickname());
+        return new FriendResponse.AddFriend(
+                friendInfo.getFriendPublicId(),
+                friendInfo.getName(),
+                friendInfo.getPersonalityType()
+        );
     }
 
     public FriendResponse.FriendList toFriendList(List<FriendInfo> friends) {
@@ -26,6 +30,10 @@ public class FriendshipMapper {
     }
 
     private FriendResponse.FriendItem toFriendItem(FriendInfo friendInfo) {
-        return new FriendResponse.FriendItem(friendInfo.getFriendPublic(), friendInfo.getNickname());
+        return new FriendResponse.FriendItem(
+                friendInfo.getFriendPublicId(),
+                friendInfo.getName(),
+                friendInfo.getPersonalityType()
+        );
     }
 }

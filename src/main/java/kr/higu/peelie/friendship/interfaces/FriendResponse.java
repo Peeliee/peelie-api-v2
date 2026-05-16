@@ -1,5 +1,6 @@
 package kr.higu.peelie.friendship.interfaces;
 
+import kr.higu.peelie.user.domain.PersonalityType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -21,14 +22,16 @@ public class FriendResponse {
     @AllArgsConstructor
     public static class AddFriend {
         private final String friendPublicId;
-        private final String nickname;
+        private final String name;
+        private final PersonalityType personalityType;
     }
 
     @Getter
     @AllArgsConstructor
     public static class FriendItem {
         private final String friendPublicId;
-        private final String nickname;
+        private final String name;
+        private final PersonalityType personalityType;
     }
 
     @Getter

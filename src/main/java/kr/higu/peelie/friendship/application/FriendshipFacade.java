@@ -18,8 +18,8 @@ public class FriendshipFacade {
         return friendshipService.getInviteCode(userPublicId);
     }
 
-    public FriendInfo addFriend(String userPublicId, String code) {
-        return friendshipService.addFriend(userPublicId, code);
+    public FriendInfo addFriend(String userPublicId, String friendCode) {
+        return friendshipService.addFriend(userPublicId, friendCode);
     }
 
     public List<FriendInfo> getFriends(String userPublicId) {

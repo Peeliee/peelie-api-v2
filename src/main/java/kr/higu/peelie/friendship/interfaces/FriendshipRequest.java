@@ -13,7 +13,7 @@ public class FriendshipRequest {
     public static class Add {
 
         @NotBlank
-        @Pattern(regexp = "^\\d{12}$")
-        private String code;
+        @Pattern(regexp = "^[a-z0-9]{8}$")
+        private String friendCode;
     }
 }

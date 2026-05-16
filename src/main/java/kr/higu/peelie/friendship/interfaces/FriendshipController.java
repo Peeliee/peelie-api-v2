@@ -5,14 +5,16 @@ import kr.higu.peelie.common.auth.UserContextHolder;
 import kr.higu.peelie.common.response.CommonResponse;
 import kr.higu.peelie.friendship.application.FriendshipFacade;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/friends")
+@RequestMapping("/api/v1/friendships")
 @RequiredArgsConstructor
 public class FriendshipController implements FriendshipControllerDoc {
 
@@ -27,11 +29,12 @@ public class FriendshipController implements FriendshipControllerDoc {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public CommonResponse<FriendResponse.AddFriend> addFriend(
             @RequestBody @Valid FriendshipRequest.Add request
     ) {
         String userPublicId = UserContextHolder.requireUserContext();
-        var friendInfo = friendshipFacade.addFriend(userPublicId, request.getCode());
+        var friendInfo = friendshipFacade.addFriend(userPublicId, request.getFriendCode());
         return CommonResponse.success(friendshipMapper.toAddFriend(friendInfo));
     }
 

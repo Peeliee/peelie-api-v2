@@ -13,7 +13,7 @@ import kr.higu.peelie.common.response.CommonResponse;
 public interface FriendshipControllerDoc {
     @Operation(
             summary = "내 초대 코드 조회",
-            description = "로그인한 사용자의 활성 친구 초대 코드를 발급합니다. 코드는 5분간 유효합니다."
+            description = "로그인한 사용자의 영구 friendCode 를 조회합니다."
     )
     @ApiResponses(value = {
             @ApiResponse(
@@ -26,7 +26,7 @@ public interface FriendshipControllerDoc {
 
     @Operation(
             summary = "친구 추가",
-            description = "친구 초대 코드를 입력해 친구 관계를 생성합니다.",
+            description = "friendCode 를 입력해 owner -> friendUser 단방향 친구 관계를 생성합니다.",
             requestBody = @RequestBody(
                     required = true,
                     description = "친구 추가 요청",
@@ -35,14 +35,14 @@ public interface FriendshipControllerDoc {
     )
     @ApiResponses(value = {
             @ApiResponse(
-                    responseCode = "200",
+                    responseCode = "201",
                     description = "친구 추가 성공",
                     content = @Content(schema = @Schema(implementation = FriendResponse.AddFriend.class))
             )
     })
     CommonResponse<FriendResponse.AddFriend> addFriend(FriendshipRequest.Add request);
 
-    @Operation(summary = "친구 목록 조회", description = "로그인한 사용자의 친구 목록을 조회합니다.")
+    @Operation(summary = "친구 목록 조회", description = "로그인한 사용자가 직접 추가한 친구 목록을 조회합니다.")
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
