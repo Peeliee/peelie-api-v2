@@ -16,13 +16,11 @@ public class FriendshipReaderImpl implements FriendshipReader {
 
     @Override
     public List<Friendship> getFriendShips(Long userId) {
-        return friendshipRepository.findAllByUserId(userId);
+        return friendshipRepository.findAllByOwnerIdOrderByCreatedAtDesc(userId);
     }
 
     @Override
     public Optional<Friendship> findFriendship(Long userId, Long friendUserId) {
-        Long userId1 = Math.min(userId, friendUserId);
-        Long userId2 = Math.max(userId, friendUserId);
-        return friendshipRepository.findByUserId1AndUserId2(userId1, userId2);
+        return friendshipRepository.findByOwnerIdAndFriendUserId(userId, friendUserId);
     }
 }
