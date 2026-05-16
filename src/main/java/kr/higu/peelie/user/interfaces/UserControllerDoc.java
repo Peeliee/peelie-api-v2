@@ -11,7 +11,7 @@ import jakarta.validation.Valid;
 import kr.higu.peelie.common.response.CommonResponse;
 import org.springframework.web.bind.annotation.PathVariable;
 
-@Tag(name = "1. User", description = "사용자 정보 API")
+@Tag(name = "1. User", description = "유저 API")
 public interface UserControllerDoc {
 
     @Operation(summary = "웹 OAuth 로그인", description = "인가 코드를 이용해 로그인합니다.")
