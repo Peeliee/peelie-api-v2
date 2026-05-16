@@ -1,6 +1,7 @@
 package kr.higu.peelie.user.interfaces;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -23,9 +24,8 @@ public class UserRequest {
     @Getter
     @NoArgsConstructor
     public static class UpdateUser {
-        @NotBlank
+        @Size(min = 1, max = 20)
         private String name;
-        @NotBlank
         private String personalityType;
     }
 
@@ -33,6 +33,7 @@ public class UserRequest {
     @NoArgsConstructor
     public static class Onboarding {
         @NotBlank
+        @Size(min = 1, max = 20)
         private String name;
         @NotBlank
         private String personalityType;

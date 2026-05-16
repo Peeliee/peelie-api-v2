@@ -5,6 +5,8 @@ import kr.higu.peelie.user.domain.PersonalityType;
 import kr.higu.peelie.user.domain.UserInfo;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
+
 public class UserResponse {
 
     @Getter
@@ -25,6 +27,7 @@ public class UserResponse {
         private final String name;
         private final PersonalityType personalityType;
         private final Boolean isOnboarded;
+        private final LocalDateTime createdAt;
 
         public User(UserInfo userInfo) {
             this.userPublicId = userInfo.getUserPublicId();
@@ -32,6 +35,7 @@ public class UserResponse {
             this.name = userInfo.getName();
             this.personalityType = userInfo.getPersonalityType();
             this.isOnboarded = userInfo.getIsOnboarded();
+            this.createdAt = userInfo.getCreatedAt();
         }
     }
 }

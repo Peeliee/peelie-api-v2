@@ -3,6 +3,8 @@ package kr.higu.peelie.user.domain;
 import kr.higu.peelie.user.domain.oauth.Provider;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
+
 @Getter
 public class UserInfo {
     private final Long id;
@@ -14,6 +16,7 @@ public class UserInfo {
     private final String name;
     private final PersonalityType personalityType;
     private final Boolean isOnboarded;
+    private final LocalDateTime createdAt;
 
     public UserInfo(User user) {
         this.id = user.getId();
@@ -25,5 +28,6 @@ public class UserInfo {
         this.name = user.getName();
         this.personalityType = user.getPersonalityType();
         this.isOnboarded = user.getIsOnboarded();
+        this.createdAt = user.getCreatedAt();
     }
 }

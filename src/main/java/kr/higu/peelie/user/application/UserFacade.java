@@ -24,7 +24,8 @@ public class UserFacade {
     }
 
     public UserInfo updateUser(String userPublicId, String name, String personalityType) {
-        return userService.updateUser(userPublicId, name, PersonalityType.from(personalityType));
+        PersonalityType parsedPersonalityType = personalityType == null ? null : PersonalityType.from(personalityType);
+        return userService.updateUser(userPublicId, name, parsedPersonalityType);
     }
 
     public UserInfo completeOnboarding(String userPublicId, String name, String personalityType) {

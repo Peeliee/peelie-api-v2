@@ -41,8 +41,12 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public UserInfo updateUser(String userPublicId, String name, PersonalityType personalityType) {
         User user = userReader.getUser(userPublicId);
-        user.changeName(name);
-        user.changePersonalityType(personalityType);
+        if (name != null) {
+            user.changeName(name);
+        }
+        if (personalityType != null) {
+            user.changePersonalityType(personalityType);
+        }
         UserInfo userInfo = new UserInfo(user);
         return userInfo;
     }

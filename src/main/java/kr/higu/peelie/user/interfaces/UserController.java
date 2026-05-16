@@ -34,7 +34,7 @@ public class UserController implements UserControllerDoc{
         return CommonResponse.success(new UserResponse.Login(result));
     }
 
-    @PostMapping("/me")
+    @GetMapping("/me")
     public CommonResponse<UserResponse.User> getMe() {
         String userPublicId = UserContextHolder.getUserContext();
         UserInfo userInfo = userFacade.getUser(userPublicId);
@@ -43,7 +43,7 @@ public class UserController implements UserControllerDoc{
     }
 
     @PatchMapping("/me")
-    public CommonResponse<UserResponse.User> updateUser(@RequestBody UserRequest.UpdateUser request) {
+    public CommonResponse<UserResponse.User> updateUser(@RequestBody @Valid UserRequest.UpdateUser request) {
         String userPublicId = UserContextHolder.getUserContext();
         UserInfo userInfo = userFacade.updateUser(userPublicId, request.getName(), request.getPersonalityType());
         UserResponse.User response = new UserResponse.User(userInfo);

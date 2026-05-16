@@ -66,7 +66,10 @@ public class User extends BaseTimeEntity {
 
     public void changeName(String name) {
         if (name == null || name.isBlank()) {
-            throw new InvalidParamException("name is empty");
+            throw new InvalidParamException("이름이 입력되지 않았습니다.");
+        }
+        if (name.length() > 20) {
+            throw new InvalidParamException("이름값이 20자보다 깁니다.");
         }
         this.name = name;
     }
