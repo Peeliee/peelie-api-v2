@@ -6,7 +6,6 @@ import kr.higu.peelie.common.response.CommonResponse;
 import kr.higu.peelie.user.application.UserFacade;
 import kr.higu.peelie.user.domain.UserInfo;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,24 +14,6 @@ import org.springframework.web.bind.annotation.*;
 public class UserController implements UserControllerDoc{
 
     private final UserFacade userFacade;
-
-    @PostMapping("/oauth/{provider}/web/login")
-    public CommonResponse<UserResponse.Login> webLogin(
-            @PathVariable String provider,
-            @RequestBody @Valid UserRequest.WebLogin request
-    ) {
-        var result = userFacade.webLogin(provider, request.getCode());
-        return CommonResponse.success(new UserResponse.Login(result));
-    }
-
-    @PostMapping("/oauth/{provider}/native/login")
-    public CommonResponse<UserResponse.Login> nativeLogin(
-            @PathVariable String provider,
-            @RequestBody @Valid UserRequest.NativeLogin request
-    ) {
-        var result = userFacade.nativeLogin(provider, request.getAccessToken());
-        return CommonResponse.success(new UserResponse.Login(result));
-    }
 
     @GetMapping("/me")
     public CommonResponse<UserResponse.User> getMe() {
@@ -56,10 +37,5 @@ public class UserController implements UserControllerDoc{
         UserInfo userInfo = userFacade.completeOnboarding(userPublicId, request.getName(), request.getPersonalityType());
         UserResponse.User response = new UserResponse.User(userInfo);
         return CommonResponse.success(response);
-    }
-
-    @GetMapping("/oauth2/code/kakao")
-    public ResponseEntity<Void> kakaoRedirect() {
-        return ResponseEntity.noContent().build();
     }
 }
