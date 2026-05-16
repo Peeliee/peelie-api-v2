@@ -7,9 +7,11 @@ import kr.higu.peelie.onboarding.application.OnboardingFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+//@RestController
+//@RequestMapping("/api/v1/onboarding")
+
+// TODO: 온보딩 정책 변경
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/onboarding")
 public class OnboardingController implements OnboardingControllerDoc {
 
     private final OnboardingFacade onboardingFacade;
