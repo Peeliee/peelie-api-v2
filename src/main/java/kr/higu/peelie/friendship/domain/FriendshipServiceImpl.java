@@ -1,7 +1,6 @@
 package kr.higu.peelie.friendship.domain;
 
 import kr.higu.peelie.friendship.domain.exception.AlreadyFriendException;
-import kr.higu.peelie.friendship.domain.exception.InvalidFriendInviteCodeException;
 import kr.higu.peelie.user.domain.User;
 import kr.higu.peelie.user.domain.UserReader;
 import lombok.RequiredArgsConstructor;
@@ -18,22 +17,19 @@ public class FriendshipServiceImpl implements FriendshipService{
 
     private final FriendshipReader friendshipReader;
     private final FriendshipStore friendshipStore;
-    private final FriendCodeManager friendCodeManager;
 
     @Override
     public FriendCode getInviteCode(String userPublicId) {
-        Long userId = userReader.getUser(userPublicId).getId();
-        FriendCode code = friendCodeManager.getOrCreate(userId);
-        return code;
+        User user = userReader.getUser(userPublicId);
+        return new FriendCode(user.getId(), user.getFriendCode());
     }
 
     @Override
     @Transactional
-    public FriendInfo addFriend(String userPublicId, String code) {
+    public FriendInfo addFriend(String userPublicId, String friendCode) {
         Long userId = userReader.getUser(userPublicId).getId();
-        Long friendId = friendCodeManager.findUserIdByCode(code)
-                .orElseThrow(InvalidFriendInviteCodeException::new);
-        User friend = userReader.getUser(friendId);
+        User friend = userReader.getUserByFriendCode(friendCode);
+        Long friendId = friend.getId();
 
         if (friendshipReader.findFriendship(userId, friendId).isPresent()) {
             throw new AlreadyFriendException();
@@ -42,7 +38,7 @@ public class FriendshipServiceImpl implements FriendshipService{
         Friendship initFriendship = Friendship.create(userId, friendId);
         Friendship friendship = friendshipStore.store(initFriendship);
 
-        return new FriendInfo(friend.getId(), friend.getUserPublicId(), friend.getName());
+        return new FriendInfo(friend.getId(), friend.getUserPublicId(), friend.getName(), friend.getPersonalityType());
     }
 
     @Override
@@ -52,9 +48,14 @@ public class FriendshipServiceImpl implements FriendshipService{
 
         List<FriendInfo> friends = friendshipReader.getFriendShips(userId).stream()
                 .map(friendship -> {
-                    Long friendId = friendship.getPairUserId(userId);
+                    Long friendId = friendship.getFriendUserId();
                     User friendUser = userReader.getUser(friendId);
-                    return new FriendInfo(friendUser.getId(), friendUser.getUserPublicId(), friendUser.getName());
+                    return new FriendInfo(
+                            friendUser.getId(),
+                            friendUser.getUserPublicId(),
+                            friendUser.getName(),
+                            friendUser.getPersonalityType()
+                    );
                 })
                 .toList();
 

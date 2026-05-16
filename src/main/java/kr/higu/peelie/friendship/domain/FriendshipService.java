@@ -5,6 +5,6 @@ import java.util.List;
 public interface FriendshipService {
     FriendCode getInviteCode(String userPublicId);
     // userPublicId는 현재 로그인한 사용자의 퍼블릭 id
-    FriendInfo addFriend(String userPublicId, String code);
+    FriendInfo addFriend(String userPublicId, String friendCode);
     List<FriendInfo> getFriends(String userPublicId);
 }
